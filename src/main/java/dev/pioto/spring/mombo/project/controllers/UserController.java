@@ -1,6 +1,7 @@
 package dev.pioto.spring.mombo.project.controllers;
 
 import dev.pioto.spring.mombo.project.models.entities.User;
+import dev.pioto.spring.mombo.project.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,16 +15,16 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers(){
 
-        User maria = new User("1", "Maria Silva", "maria@gmail.com");
-        User alex = new User("2", "Alex Green", "alex@gmail.com");
-
-        List<User> list = new ArrayList<>();
-
-        list.addAll(Arrays.asList(maria, alex));
+        var list = userService.getAllUsers();
 
         return ResponseEntity.ok().body(list);
     }

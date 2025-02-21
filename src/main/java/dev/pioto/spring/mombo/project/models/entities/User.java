@@ -1,11 +1,17 @@
 package dev.pioto.spring.mombo.project.models.entities;
 
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+
+@Document
 public class User implements Serializable {
 
+    @Id
     private String userId;
     private String name;
     private String email;
