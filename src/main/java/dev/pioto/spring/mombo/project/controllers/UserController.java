@@ -1,5 +1,6 @@
 package dev.pioto.spring.mombo.project.controllers;
 
+import dev.pioto.spring.mombo.project.models.dtos.UserDTO;
 import dev.pioto.spring.mombo.project.models.entities.User;
 import dev.pioto.spring.mombo.project.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,13 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<UserDTO>> getAllUsers(){
 
-        var list = userService.getAllUsers();
+        var list = userService
+                .getAllUsers()
+                .stream()
+                .map(user -> new UserDTO(user))
+                .toList();
 
         return ResponseEntity.ok().body(list);
     }
