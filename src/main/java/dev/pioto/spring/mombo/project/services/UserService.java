@@ -1,5 +1,6 @@
 package dev.pioto.spring.mombo.project.services;
 
+import dev.pioto.spring.mombo.project.models.dtos.userDtos.CreateUserDTO;
 import dev.pioto.spring.mombo.project.models.entities.User;
 import dev.pioto.spring.mombo.project.repositories.UserRepository;
 import dev.pioto.spring.mombo.project.services.exceptions.ObjNotFoundException;
@@ -29,5 +30,14 @@ public class UserService {
 
 
         return user;
+    }
+
+    public User insertUser(CreateUserDTO userDTO) {
+
+        return userRepository.insert(userFromDTO(userDTO));
+    }
+
+    private User userFromDTO(CreateUserDTO dto){
+        return new User (null, dto.name(), dto.email());
     }
 }

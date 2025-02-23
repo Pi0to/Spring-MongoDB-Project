@@ -1,4 +1,4 @@
-package dev.pioto.spring.mombo.project.models.dtos;
+package dev.pioto.spring.mombo.project.models.dtos.userDtos;
 
 import dev.pioto.spring.mombo.project.models.entities.User;
 

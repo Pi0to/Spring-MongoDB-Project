@@ -1,16 +1,14 @@
 package dev.pioto.spring.mombo.project.controllers;
 
-import dev.pioto.spring.mombo.project.models.dtos.UserDTO;
-import dev.pioto.spring.mombo.project.models.entities.User;
+import dev.pioto.spring.mombo.project.models.dtos.userDtos.CreateUserDTO;
+import dev.pioto.spring.mombo.project.models.dtos.userDtos.UserDTO;
 import dev.pioto.spring.mombo.project.services.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -35,6 +33,20 @@ public class UserController {
         return ResponseEntity.ok().body(list);
     }
 
+    @PostMapping
+    public ResponseEntity<String> createUser(@RequestBody CreateUserDTO userDTO){
+
+        var user = userService.insertUser(userDTO);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(user.getUserId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body("User created successfully");
+    }
+
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("userId") String userId){
 
@@ -43,4 +55,5 @@ public class UserController {
     return ResponseEntity.ok().body(new UserDTO(user));
 
     }
+
 }
