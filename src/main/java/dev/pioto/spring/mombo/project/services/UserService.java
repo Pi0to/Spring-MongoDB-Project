@@ -26,7 +26,7 @@ public class UserService {
 
         var user = userRepository
                 .findById(userId)
-                .orElseThrow(() -> new ObjNotFoundException());
+                .orElseThrow(ObjNotFoundException::new);
 
 
         return user;
@@ -39,5 +39,12 @@ public class UserService {
 
     private User userFromDTO(CreateUserDTO dto){
         return new User (null, dto.name(), dto.email());
+    }
+
+    public void deleteUser(String userId) {
+
+        getUserById(userId);
+
+        userRepository.deleteById(userId);
     }
 }
